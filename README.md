@@ -10,3 +10,9 @@ https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API k
 
 5days forecast -- https://openweathermap.org/forecast5
 api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+
+next steps:
+make it available to send pronostico todas las mañanas, y cada 3 horas si va a llover
+armar el dockerfile
+deployar en docker y ponerlo a correr en la raspi
+documentar todo
