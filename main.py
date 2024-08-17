@@ -13,7 +13,7 @@ def main():
     drvLogger.initLogger()
     mainPath=os.path.abspath(os.getcwd())
     ### read config File
-    config=readConfigFile(mainPath+'\ConfigFiles\config.json')
+    config=readConfigFile(mainPath+'/ConfigFiles/config.json')
     api_key = config["api_key"]
     city = config["city"]
     botToken= config["bot_token"]
