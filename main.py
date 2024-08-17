@@ -1,5 +1,5 @@
 import schedule
-import time
+## import time
 import pronosticos
 import os
 
