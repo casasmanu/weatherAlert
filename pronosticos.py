@@ -83,10 +83,10 @@ def dataParserInDays(data):
         ##todayDay=todayDate.day
         crrDate=todayDate+timedelta(days=i)
         crrDateDay=crrDate.day
-        while(crrDateDay==dataDateValue):
+        while(crrDateDay==dataDateValue and j<40):
             dataList[i].append(data['list'][j])
-            j+=1
             dataDateValue=datetime.strptime(data['list'][j]['dt_txt'],dateFormat).day
+            j+=1
    return  dataList
 
 def getLimitsForEachDay(lista:list):

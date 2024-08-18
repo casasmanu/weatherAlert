@@ -16,7 +16,8 @@ def main():
     config=readConfigFile(mainPath+'/ConfigFiles/config.json')
     api_key = config["api_key"]
     city = config["city"]
-    botToken= config["bot_token"]
+    botToken= os.environ['BOT_TOKEN']
+    destinatary=os.environ['BOT_DESTINATARY']
     if not api_key or not city:   ## esto quedo colgado, no esta mal... pero...
         print("Asegúrate de configurar las variables de entorno OPENWEATHERMAP_API_KEY y OPENWEATHERMAP_CITY.")
         return
@@ -28,7 +29,7 @@ def main():
     schedule.every().day.at("07:05").do(pronosticos.obtener_pronostico_futuro, api_key=api_key, city=city)
     outputPronostico=pronosticos.obtener_pronostico_futuro(api_key=api_key,city=city)
 
-    bot_send_msg(botToken,5178063489,outputPronostico)
+    bot_send_msg(botToken,destinatary,outputPronostico)
     while True:
         schedule.run_pending()
         time.sleep(1)
