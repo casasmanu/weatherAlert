@@ -3,6 +3,8 @@ from datetime import datetime , timedelta
 import logging
 logger = logging.getLogger(__name__)
 
+from Drivers.drvTelegram import bot_send_msg
+
 def obtener_pronostico_actual(api_key, city):
     current_url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&lang=sp&units=metric&appid={api_key}"
     response = requests.get(current_url)
@@ -42,7 +44,7 @@ def obtener_pronostico_actual(api_key, city):
 
 
 
-def obtener_pronostico_futuro(api_key, city):
+def obtener_pronostico_futuro(api_key, city,botToken,destinatary):
     logger.info('FUNC -- obtener_pronostico_futuro')
     current_url = f"http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}&units=metric"
     response = requests.get(current_url)
@@ -65,14 +67,14 @@ def obtener_pronostico_futuro(api_key, city):
     {tomorrowDate.day}.{todayDate.month} ----> {dailyTempMax[1]}°C | {dailyTempMin[1]}°C \n \
     {overTomorrowDate.day}.{todayDate.month} ----> {dailyTempMax[2]}°C | {dailyTempMin[2]}°C" 
     
-    
-    logger.info(output_text)
+    bot_send_msg(botToken,destinatary,output_text)
     logger.info('pronostico_actual run correctly')
     return output_text
 
 
 def dataParserInDays(data):
 ## parse the values for the next 5 days, separating them in an array
+   logger.info('dataParserInDays started')
    dateFormat='%Y-%m-%d %H:%M:%S'
    dataList=[[] for i in range(5)]
    todayDate=datetime.today()
@@ -87,13 +89,16 @@ def dataParserInDays(data):
             dataList[i].append(data['list'][j])
             dataDateValue=datetime.strptime(data['list'][j]['dt_txt'],dateFormat).day
             j+=1
+
+   logger.info('dataParserInDays finished')
    return  dataList
 
 def getLimitsForEachDay(lista:list):
     # double matrix to go each day, every 3 hours
+    logger.info('getLimitsforEachDay started')
     maximosByDay=[]
     minimosByDay=[]
-    print("---------------------")
+    #print("---------------------")
     for i in range (0,4) :
         klimit=len(lista[i])
         tempMaxList=[]
@@ -101,18 +106,21 @@ def getLimitsForEachDay(lista:list):
         #create the list for the temperatures
         #maybe is better to separate values before in data parser
         if (klimit==0):
-            print("NULL VALUE IN PREDICIONTS CHECK pronosticos futuros")
+            logger.info('getLimitsforEachDay - NULL VALUE IN PREDICIONTS CHECK pronosticos futuros')
             maximosByDay.append(0)
             minimosByDay.append(0)    
         else:    
             for j in range (0,klimit):
                 tempMaxList.append(lista[i][j]['main']["temp_max"])
                 tempMinList.append(lista[i][j]['main']["temp_min"])
-                print(tempMaxList[j])
-            print("\n")
+                #print(tempMaxList[j])
+            #print("\n")
             maximosByDay.append(max(tempMaxList))
             minimosByDay.append(min(tempMinList))
-            print(maximosByDay[i])
-            print("---------------------")
+            #print(maximosByDay[i])
+            #print("---------------------")
+            
+    logger.info('getLimitsforEachDay - finished running')
+        
 
     return maximosByDay,minimosByDay
