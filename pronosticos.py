@@ -5,7 +5,8 @@ logger = logging.getLogger(__name__)
 
 from Drivers.drvTelegram import bot_send_msg
 
-def obtener_pronostico_actual(api_key, city):
+def obtener_pronostico_actual(api_key, city,botToken,destinatary):
+    logger.info('obtener_pronostico_actual initiated')
     current_url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&lang=sp&units=metric&appid={api_key}"
     response = requests.get(current_url)
     logger.info('API called correctly')
@@ -32,11 +33,19 @@ def obtener_pronostico_actual(api_key, city):
     output_text=f"{textDateFromTimeStapm} \n \
         Pronóstico Actual:{pronDesc} , {pronGral}\n \
         la temperatura es de {pronTempAct}°C y la sensacion termica {pronTempSens}°C \n \
-        maxima y minima pronosticadas para hoy {pronTempMax,pronTempMin} °C \n \
         humedad %{pronTempHum} y presion {pronTempPres} Hpa \n \
         Viento: {pronWind} nudos? \n \
         hora de salida {textSunriseTime} puesta del sol {textSunsetTime}" 
     
+    ####################################################################################
+    logger.info('sending data')
+    for retry in range(3):
+        try:
+            bot_send_msg(botToken,destinatary,output_text)
+            break
+        except Exception as e:
+            logger.error(e)
+    ####################################################################################
     
     logger.info(output_text)
     logger.info('pronostico_actual run correctly')
@@ -67,8 +76,17 @@ def obtener_pronostico_futuro(api_key, city,botToken,destinatary):
     {tomorrowDate.day}.{todayDate.month} ----> {dailyTempMax[1]}°C | {dailyTempMin[1]}°C \n \
     {overTomorrowDate.day}.{todayDate.month} ----> {dailyTempMax[2]}°C | {dailyTempMin[2]}°C" 
     
-    bot_send_msg(botToken,destinatary,output_text)
-    logger.info('pronostico_actual run correctly')
+    ####################################################################################
+    logger.info('sending data')
+    for retry in range(3):
+        try:
+            bot_send_msg(botToken,destinatary,output_text)
+            break
+        except Exception as e:
+            logger.error(e)
+    ####################################################################################
+    
+    logger.info('obtener_pronostico_futuro run correctly')
     return output_text
 
 
