@@ -27,15 +27,23 @@ def obtener_pronostico_actual(api_key, city,botToken,destinatary):
     
     logger.info('Weather data parsed')
     textDateFromTimeStapm= str(datetime.fromtimestamp(pronTimeStamp))
-    textSunsetTime=str(datetime.fromtimestamp(pronSunset))
-    textSunriseTime=str(datetime.fromtimestamp(pronSunrise))
+    textSunsetTime=str(datetime.strftime(datetime.fromtimestamp(pronSunset),'%H:%M'))
+    textSunriseTime=str(datetime.strftime(datetime.fromtimestamp(pronSunrise),'%H:%M'))
 
-    output_text=f"{textDateFromTimeStapm} \n \
-        Pronóstico Actual:{pronDesc} , {pronGral}\n \
-        la temperatura es de {pronTempAct}°C y la sensacion termica {pronTempSens}°C \n \
-        humedad %{pronTempHum} y presion {pronTempPres} Hpa \n \
-        Viento: {pronWind} nudos? \n \
-        hora de salida {textSunriseTime} puesta del sol {textSunsetTime}" 
+    output_text=f"Temperatura actual de {pronTempAct}°C, sensacion termica {pronTempSens}°C \n\
+    el cielo esta {pronDesc} -- {pronGral}\n\
+    Humedad         %{pronTempHum}\n\
+    Presion             {pronTempPres} Hpa \n\
+    Viento:              {pronWind} nudos \n\
+    Amanecer:        {textSunriseTime} \n\
+    Ocaso:               {textSunsetTime}" 
+
+    # output_text=f"{textDateFromTimeStapm} \n \
+    #     Pronóstico Actual:{pronDesc} , {pronGral}\n \
+    #     la temperatura es de {pronTempAct}°C y la sensacion termica {pronTempSens}°C \n \
+    #     humedad %{pronTempHum} y presion {pronTempPres} Hpa \n \
+    #     Viento: {pronWind} nudos? \n \
+    #     hora de salida {textSunriseTime} puesta del sol {textSunsetTime}" 
     
     ####################################################################################
     logger.info('sending data')

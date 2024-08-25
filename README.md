@@ -16,3 +16,6 @@ make it available to send pronostico todas las mañanas, y cada 3 horas si va a 
 armar el dockerfile
 deployar en docker y ponerlo a correr en la raspi
 documentar todo
+
+next steps
+agregar algo que cuando cambie el status a [rain] avise
