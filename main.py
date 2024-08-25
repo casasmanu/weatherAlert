@@ -27,11 +27,12 @@ def main():
     # Programa las llamadas a las funciones en intervalos diferentes
     #schedule.every(1).hour.do(pronosticos.obtener_pronostico_actual, api_key=api_key, city=city)
     #schedule.every(3).hours.do(pronosticos.obtener_pronostico_corto_plazo, api_key=api_key, city=city)
-    schedule.every().day.at("07:00").do(pronosticos.obtener_pronostico_futuro, api_key=api_key, city=city,botToken=botToken,destinatary=destinatary)
-    schedule.every().day.at("10:21").do(pronosticos.obtener_pronostico_actual, api_key=api_key, city=city,botToken=botToken,destinatary=destinatary)
+    schedule.every().day.at("07:00").do(pronosticos.obtener_pronostico_actual, api_key=api_key, city=city,botToken=botToken,destinatary=destinatary)
+    schedule.every().day.at("10:00").do(pronosticos.obtener_pronostico_actual, api_key=api_key, city=city,botToken=botToken,destinatary=destinatary)
     schedule.every().day.at("16:00").do(pronosticos.obtener_pronostico_actual, api_key=api_key, city=city,botToken=botToken,destinatary=destinatary)
+    schedule.every().day.at("21:00").do(pronosticos.obtener_pronostico_futuro, api_key=api_key, city=city,botToken=botToken,destinatary=destinatary)
     
-    #outputPronostico=pronosticos.obtener_pronostico_futuro(api_key=api_key,city=city,botToken=botToken,destinatary=destinatary)
+    outputPronostico=pronosticos.obtener_pronostico_actual(api_key=api_key,city=city,botToken=botToken,destinatary=destinatary)
     while True:
         schedule.run_pending()
         time.sleep(300)
