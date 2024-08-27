@@ -24,4 +24,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: myweatherapp:latest
+          tags: romaneitor753/myweatherapp:latest
