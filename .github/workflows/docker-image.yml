@@ -23,6 +23,6 @@ jobs:
       - name: build and push docker image to registry
         uses: docker/build-push-action@v5
         with:
-          context: DockerFileFolder/
+          context: weatherAlert/
           push: true
-          tags: black1512/demo1:latest
+          tags: myweatherapp:latest
