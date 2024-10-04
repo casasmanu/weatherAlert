@@ -3,10 +3,10 @@ import time
 import pronosticos
 import os
 from dotenv import load_dotenv
+import logging
 
 # Load the .env file
 load_dotenv()
-import logging
 logger = logging.getLogger(__name__)
 
 #from Drivers.drvConfig import readConfigFile
@@ -17,12 +17,15 @@ def main():
     ## INIT CONFIG
     drvLogger.initLogger()
     ### read config File
-    api_key = os.environ["API_KEY"]
-    city = os.environ["CITY"]
-    botToken= os.environ['BOT_TOKEN']
-    destinatary=os.environ['BOT_DESTINATARY']
-    
-    logger.info("MAIN - environment variables loaded")
+    try:
+        api_key = os.environ["API_KEY"]
+        city = os.environ["CITY"]
+        botToken= os.environ['BOT_TOKEN']
+        destinatary=os.environ['BOT_DESTINATARY']
+        logger.info("Main.py - environment variables loaded")  
+    except:
+        logger.error("Main.py - Error while loading init variables from .env")
+        
     
     # Programa las llamadas a las funciones en intervalos diferentes
     #schedule.every(1).hour.do(pronosticos.obtener_pronostico_actual, api_key=api_key, city=city)

@@ -1,10 +1,17 @@
 import telebot
+import logging
+logger = logging.getLogger(__name__)
 
 #define usefull functions
 def bot_send_msg(BOT_TOKEN,id,msg):
- bot = telebot.TeleBot(BOT_TOKEN)  
- bot.send_message(id,msg)
- return
+  try:
+    bot = telebot.TeleBot(BOT_TOKEN)  
+    bot.send_message(id,msg)
+    logger.info("message sent succesfully")
+  except:
+    logger.error("Problem while trying to send a msg")
+    
+  return
 
 
 def getNewUsers(BOT_TOKEN):
