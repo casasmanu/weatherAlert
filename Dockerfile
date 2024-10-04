@@ -1,8 +1,7 @@
-FROM python
+FROM python:3
 ENV TZ="Europe/Berlin"
 WORKDIR /app
 COPY . /app/
-RUN apt-get update && apt-get install -y python3 && apt-get install -y python3-pip
-RUN pip3 install -r /app/requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 ENTRYPOINT ["python3"]
-CMD ["main.py"]
+CMD ["python","main.py"]
